@@ -95,7 +95,8 @@ if(isset($_GET['username'])) {
     $UserType = $_POST['UserType'];
 
     // Update user details
-    $sql = "UPDATE usertable SET username='$username', password='$password', email='$email', address='$address', UserType='$UserType' WHERE username='$original_username'";
+    $sql = "UPDATE usertable SET username='$username', password='$password', email='$email', address='$address', 
+    UserType='$UserType' WHERE username='$original_username'";
 
     if (mysqli_query($con, $sql)) {
         echo "<script>alert('User updated successfully.')</script>";

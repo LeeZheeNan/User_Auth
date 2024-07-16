@@ -1,10 +1,11 @@
 <?php
+require_once 'session.php';
 require_once 'stripe-php/init.php';
-//require_once 'session.php';
+//
 
 // Include the session start and config file if necessary
 require_once 'config.php';
-session_start();
+
 $order = isset($_SESSION["order"]) ? $_SESSION["order"] : null;
 
 // Stripe API secret key
@@ -17,6 +18,7 @@ if (isset($_SESSION['username'])) {
 } else {
     // Handle the case where the user is not logged in
     // You might redirect them to a login page or display an error message
+    header("Location: login.html");
     exit("User not logged in.");
 }
 
@@ -146,8 +148,8 @@ $checkout_session = \Stripe\Checkout\Session::create([
     "payment_method_types" => ["card"],
     "line_items" => $line_items, // Pass the array of line items
     "mode" => "payment",
-    "success_url" => "http://localhost/User_Auth/success.php",
-    "cancel_url" => "http://localhost/User_Auth/cart.php",
+    "success_url" => "https://localhostapp.my/success.php",
+    "cancel_url" => "https://localhostapp.my/cart.php",
     "locale" => "auto"
 ]);
 

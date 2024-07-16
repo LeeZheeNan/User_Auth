@@ -4,6 +4,7 @@
       <link rel="stylesheet" href="login1.css">
       <title>Login</title>
       <link rel="icon" type="image/x-icon" href="images/hungry.png">
+      <script src="jquery.min.js"></script>
 </head>
 
 <style>
@@ -19,6 +20,15 @@
  text-align: center;
 }
 input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=password], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -48,35 +58,98 @@ body {
   margin-top: 30px;
 }
 </style>
+<script>
+  $(function () {
+      $("#user_error_message").hide();
+      $("#password_error_message").hide();
 
+      var error_username = false;
+      var error_password = false;
+
+      $("#user").focusout(function () {
+          check_username();
+      });
+      $("#pass").focusout(function () {
+          check_password();
+      });
+
+      function check_username() {
+            var pattern = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{6}$/;
+            var username_value = $("#user").val();
+            if (username_value.match(pattern)) {
+                $("#user_error_message").hide();
+                $("#user").css("border-bottom", "2px solid #34F458");
+            } else {
+                $("#user_error_message").html("Exactly 6 characters with letters and numbers.");
+                $("#user_error_message").show();
+                $("#user").css("border-bottom", "2px solid #F90A0A");
+                error_username = true;
+            }
+        }
+
+      function check_password() {
+          var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+          var password_value = $("#pass").val();
+          if (password_value.match(pattern)) {
+              $("#password_error_message").hide();
+              $("#pass").css("border-bottom", "2px solid #34F458");
+          } else {
+              $("#password_error_message").html("At least 8 characters with number, symbol, capital, and small letter.");
+              $("#password_error_message").show();
+              $("#pass").css("border-bottom", "2px solid #F90A0A");
+              error_password = true;
+          }
+      }
+
+      $("#registration_form").submit(function () {
+          error_username = false;
+          error_password = false;
+
+          check_username();
+          check_password();
+
+          if (error_username === false && error_password === false) {
+              return true;
+          } else {
+              alert("Please fill the form correctly.");
+              return false;
+          }
+      });
+  });
+</script>
 
 <body>
 
-      <div class="design1"><h1>Lokesh's Pizza Ordering System</h1></div>
-      <div class="login">
-      <form method="post" action="login.php">
-            <h2>LOGIN</h2>
+<div class="design1">
+    <h1>Lokesh's Pizza Ordering System</h1>
+</div>
+<div class="login">
+    <form method="post" action="login.php">
+        <h2>LOGIN</h2>
 
-            <label>Username</label><br>
-            <input type="text" name="username" id="user" required /><br>
-            <label>Password</label><br>
-            <input type="text" name="password" id="pass" required><br>
-            <label>User Type</label><br>
-            <select name="Utype" id="">
-              <option selected>Choose User Type</option>
-              <option value="Admin">Admin</option>
-              <option value="Customer">Customer</option>
-            </select><br>
-            <button type="submit" name="submit">Login</button><br><br>
-            <div class ="just">
+        <label>Username</label><br>
+        <input type="text" class="input" name="username" id="user" /><br>
+        <span class="error_form" id="user_error_message"></span><br>
+        
+        <label>Password</label><br>
+        <input type="password" class="input" name="password" id="pass"/><br>
+        <span class="error_form" id="password_error_message"></span><br>
+        
+        <label>User Type</label><br>
+        <select name="Utype" required>
+            <option selected disabled>Choose User Type</option>
+            <option value="Admin">Admin</option>
+            <option value="Customer">Customer</option>
+        </select><br><br>
+        
+        <button type="submit" name="submit">Login</button><br><br>
+        
+        <div class="just">
             <a href="register.html" style="font-size: 15px; margin-top: 10px;">Sign Up?</a>&nbsp;&nbsp;
             <a href="recover_psw.html" style="font-size: 15px; margin-top: 10px;" id="recover">Forgot Password?</a>
-            </div>
-            
-
-
-      </form>
+        </div>
+    </form>
 </div>
-</body>
 
+</body>
 </html>

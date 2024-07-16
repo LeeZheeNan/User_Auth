@@ -49,7 +49,7 @@ if (isset($_POST['recover'])) {
         $mail->Body = "<b>Dear User</b>
             <h3>We received a request to reset your password.</h3>
             <p>Kindly click the below link to reset your password</p>
-            <a href='http://localhost/User_Auth/reset_psw.html'>Reset Password</a>
+            <a href='https://localhostapp.my/reset_psw.html'>Reset Password</a>
             <br><br>
             <p>With regards,</p>
             <b>Programming with Lam</b>";
@@ -61,6 +61,7 @@ if (isset($_POST['recover'])) {
         }
     } else {
         echo "<script>alert('Sorry, no emails exist');</script>";
+        echo "<script>location.href='recover_psw.html'</script>";
     }
 }
 ?>

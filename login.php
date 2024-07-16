@@ -1,9 +1,9 @@
 <?php
 // Start up your PHP Session
 session_start();
-
-include('config.php');
 require_once 'session.php';
+include('config.php');
+
 
 # Usage of sanitize input function for input validation purpose
 function sanitize_input($data) {
